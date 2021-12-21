@@ -11,8 +11,7 @@ public class process {
     ArrayList < Integer > quantumTime;
     ArrayList < Double > AGAT;
 
-    process(String name, String color,int arrivalTime, int burstTime, int priority )
-    {
+    process(String name, String color,int arrivalTime, int burstTime, int priority ) {
         this.name=name;
         this.color=color;
         this.arrivalTime=arrivalTime;
