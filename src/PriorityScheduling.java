@@ -9,15 +9,16 @@ public class PriorityScheduling {
     private PriorityQueue < Process > readyQueue;
     private ArrayList<Process> arrivalQueue;
     private ArrayList<String>order;
+    private ArrayList<Process> executedProcesses=new ArrayList<> ();
     int time;
 
-    PriorityScheduling()
+    PriorityScheduling(ArrayList<Process> arrivalQueue)
     {
         sortProcesses = Comparator.comparing ( Process::getPriority );
         readyQueue = new PriorityQueue<Process> (sortProcesses);
-        arrivalQueue = new ArrayList <Process> ();
         order = new ArrayList <String> ();
         time =0;
+        this.arrivalQueue = arrivalQueue;
     }
 
     public boolean isDead(Process temp){
@@ -56,7 +57,7 @@ public class PriorityScheduling {
         int value=0;
 
         while (true){
-            if (!arrivalQueue.isEmpty () && time<arrivalQueue.get ( 0 ).getArrivalTime ()){
+            if (!arrivalQueue.isEmpty () && time< arrivalQueue.get ( 0 ).getArrivalTime ()){
                 order.add ( null );
                 time++;
             }
@@ -70,6 +71,7 @@ public class PriorityScheduling {
         }
 
         curProcess = readyQueue.poll ();   //curProcess = first process in queue
+        executedProcesses.add ( curProcess );
         while ( true ){
 
             if (readyQueue.isEmpty() && isDead(curProcess) && i == arrivalQueue.size())
@@ -93,28 +95,19 @@ public class PriorityScheduling {
         }
         return order;
     }
-
-//    public static void main ( String[] args ) {
-//        process p1 = new process ("p1","red",0,3,4);
-//        process p2 = new process ("p2","yellow",0,5,3);
-//        process p3 = new process ("p3","black",0,2,10);
-//
-//
-//        PriorityScheduling b = new PriorityScheduling ();
-//        b.arrivalQueue.add ( p1 );
-//        b.arrivalQueue.add ( p2 );
-//        b.arrivalQueue.add ( p3 );
-//
-//        ArrayList<process> arrival = new ArrayList<> ();
-//        arrival.add ( p1 );
-//        arrival.add ( p2 );
-//        arrival.add ( p3 );
-//
-//        List<String> data = b.start (arrival);
-//        for(String t:data){
-//            System.out.println ( t );
-//        }
-//    }
-
+    public double getAverageWaiting() {
+        double sumOfWaiting = 0.0;
+        for(Process p : executedProcesses) {
+            sumOfWaiting+=p.getWaitingTime();
+        }
+        return sumOfWaiting / executedProcesses.size();
+    }
+    public double getAverageTurnAround() {
+        double sumOfTurnAround = 0.0;
+        for(Process p : executedProcesses) {
+            sumOfTurnAround+=p.getTurnaroundTime();
+        }
+        return sumOfTurnAround / executedProcesses.size();
+    }
 
 }

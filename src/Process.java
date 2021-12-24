@@ -16,10 +16,10 @@ public class Process {
     public int pID;
     public static int id = 0;
     public int quantum;
+    private int processingTime;
 
-    Process(){
+    Process(){}
 
-    }
     Process(String name, String color, int arrivalTime, int burstTime, int priority, int quantum) {
         this.name = name;
         this.color = color;
@@ -116,6 +116,11 @@ public class Process {
             waitingTime+=start.get(i) - end.get(i-1);
         }
         turnaroundTime = end.get(end.size()-1) - arrivalTime;
+    }
+
+    void Execute(){
+        System.out.println( "Process " + name );
+        processingTime--;
     }
 
 

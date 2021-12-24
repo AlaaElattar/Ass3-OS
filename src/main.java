@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
@@ -58,6 +59,30 @@ public class main {
         }
 
         choiceNum = menu();
+
+        if (choiceNum == 1){
+            SJF  sjf = new SJF ( processArrayList );
+            sjf.startScheduling ();
+            System.out.println ("Average Waiting time : "+ sjf.getAverageTurnaroundTime () );
+            System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
+
+        }
+
+        if (choiceNum == 2){
+
+
+        }
+
+        if (choiceNum == 3){
+            PriorityScheduling priority = new PriorityScheduling (processArrayList);
+            List<String>data = priority.start ( processArrayList );
+            for (String x:data){
+                System.out.println (x );
+                System.out.println ( "Average Waiting time : "+ priority.getAverageWaiting ());
+                System.out.println ( "Average Turnaround time : "+ priority.getAverageTurnAround ());
+            }
+            
+        }
 
        if (choiceNum == 4) {
             AGAT a = new AGAT(processArrayList);

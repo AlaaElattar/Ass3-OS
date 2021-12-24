@@ -2,124 +2,65 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SJF {
-    private ArrayList<Process> output;
+    private ArrayList < Process > processes;
+    private ArrayList < Integer > executedProcesses = new ArrayList < Integer > ( );
 
-    SJF()
-    {
-        output = new ArrayList <Process> ();
+    SJF ( ArrayList < Process > processes ) {
+        this.processes = processes;
     }
 
-    private void sort(ArrayList<Process> arrivalSort){
-        Collections.sort ( arrivalSort,(o1,o2)->{
-            int time1 = o1.getArrivalTime ();
-            int time2 = o2.getArrivalTime ();
-            if (time1==time2){
-                if (o2.getBurstTime ()<time1)
-                    return 1;
-                else if (o2.getArrivalTime ()>time1)
-                    return -1;
-                else return 0;
-            }else {
-                if (o2.getBurstTime ()<time1)
-                    return 1;
-                else if (o2.getArrivalTime ()>time1)
-                    return -1;
-                else return 0;
-            }
-        });
-    }
+    public void startScheduling ( ) {
+        int currTime = 1;
+        int currProcess = 0;
+        for ( int i = 0 ; i < processes.size ( ) ; i++ ) {
+            int temp = currProcess;
+            do {
+                currProcess = getNextProcessNumber ( currTime );
+                if ( currProcess == - 1 ) {
+                    currTime++;
+                }
+            } while ( currProcess == - 1 );
 
-    private Process getSmallestBurst(ArrayList<Process> temp) {
-        int smallestBurst = temp.get(0).getBurstTime ();
-        Process p = temp.get(0);
-        for (int i = 0; i < temp.size(); i++) {
-            if (temp.get(i).getBurstTime() < smallestBurst) {
-                smallestBurst = temp.get(i).getBurstTime();
-                p = temp.get(i);
-            }
+            processes.get ( currProcess ).Execute ( );
+            processes.get ( currProcess ).setWaitingTime ( currTime - processes.get ( currProcess ).getArrivalTime ( ) );
+            processes.get ( currProcess ).setTurnaroundTime ( processes.get ( currProcess ).getWaitingTime ( ) + processes.get ( currProcess ).getBurstTime ( ) );
+            currTime += processes.get ( currProcess ).getBurstTime ( );
+            executedProcesses.add ( currProcess );
+
         }
-        return p;
     }
 
-    public void start(ArrayList<Process> arrivalSort){
-        sort ( arrivalSort );
-        ArrayList<Process> out = new ArrayList <> ();
-        Process temp ;
-        int time=0,counter=0;
-        int lastTime =0;
-
-        while (counter<arrivalSort.size ()){
-            ArrayList<Process> arr = new ArrayList <> ();
-            for (int i=0;i<arrivalSort.size ();i++){
-                if (arrivalSort.get ( i ).getArrivalTime ()<=lastTime ){
-                    arr.add ( arrivalSort.get ( i ) );
+    private int getNextProcessNumber ( int currTime ) {
+        int nextProcessNumber = - 1;
+        for ( int i = 0 ; i < processes.size ( ) ; i++ ) {
+            if ( ! executedProcesses.contains ( i ) && processes.get ( i ).getArrivalTime ( ) <= currTime ) { // the next process must be arrived and must have
+                // the lest BurstTime
+                if ( nextProcessNumber == - 1 ) {
+                    nextProcessNumber = i;
+                } // if it's the first process
+                else if ( processes.get ( i ).getBurstTime ( ) < processes.get ( nextProcessNumber ).getBurstTime ( ) ) {
+                    nextProcessNumber = i;
                 }
             }
-
-            if (arr.size ()==0){
-                out.add ( arrivalSort.get ( 0 ) );
-                time = arrivalSort.get ( 0 ).getArrivalTime ();
-                arrivalSort.get(0).setWaitingTime(0);
-                arrivalSort.get(0).setTurnaroundTime (arrivalSort.get(0).getBurstTime());
-                lastTime = arrivalSort.get(0).getArrivalTime() + arrivalSort.get(0).getBurstTime();
-                counter++;
-            }else{
-                temp = getSmallestBurst ( arr );
-                temp.setWaitingTime ( lastTime-temp.getArrivalTime () );
-                temp.setTurnaroundTime ( temp.getWaitingTime ()+temp.getBurstTime () );
-                lastTime = lastTime+temp.getBurstTime ();
-                out.add ( temp );
-                counter++;
-            }
         }
-
-        output = out;
-        for (int i=0;i<output.size ();i++)
-        {
-            System.out.println (output.get ( i ).getName ());
-        }
+        return nextProcessNumber;
     }
 
-    public void print (ArrayList<Process> tmp){
-        for (int i=0;i<tmp.size ();i++){
-            if (tmp.get ( i ) == null){
-                System.out.println ("Null" );
-
-            }
-            System.out.println (tmp.get ( i ).getName () );
-
+    public double getAverageWaitingTime ( ) {
+        double sumOfWaiting = 0.0;
+        for ( Process p : processes ) {
+            sumOfWaiting += p.getWaitingTime ( );
         }
+        return sumOfWaiting / processes.size ( );
     }
 
-    public double averageWaiting() {
-        double sum = 0;
-        for (int i = 0; i < output.size(); i++) {
-            sum += output.get(i).getWaitingTime();
+    public double getAverageTurnaroundTime ( ) {
+        double sumOfTurnAround = 0.0;
+        for ( Process p : processes ) {
+            sumOfTurnAround += p.getTurnaroundTime ( );
         }
-        return (sum / output.size());
+
+        return sumOfTurnAround / processes.size ( );
     }
 
-    public double averageTurnaround() {
-        double sum = 0;
-        for (int i = 0; i < output.size(); i++) {
-            sum += output.get(i).getTurnaroundTime ();
-        }
-        return (sum / output.size());
-    }
-
-//    public static void main ( String[] args ) {
-//        process p1 = new process ("p1","red",0,3,4);
-//        process p2 = new process ("p2","yellow",0,5,3);
-//        process p3 = new process ("p3","black",0,2,10);
-//
-//        ArrayList<process> arrive = new ArrayList <> ();
-//        arrive.add ( p1 );
-//        arrive.add ( p2 );
-//        arrive.add ( p3 );
-//
-//        SJF s = new SJF ();
-//        s.start ( arrive );
-////        s.print ( arrive );
-//
-//    }
 }
