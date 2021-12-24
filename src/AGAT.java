@@ -123,9 +123,10 @@ public class AGAT {
     public void AGAlgorithm() {
         refill();
         Process inExecution = readyQueue.get(0);
+        readyQueue.remove(0);
         computeFactor(inExecution);
         int i = 0;
-        readyQueue.remove(0);
+
         processExecutionOrder.add(inExecution.getName());
         int quantum40 = (int) Math.round(inExecution.quantum * 40 / 100.0);
         inExecution.start.add(time);
