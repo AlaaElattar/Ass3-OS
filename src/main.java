@@ -73,7 +73,6 @@ public class main {
             srtf.start();
             System.out.println ("Average Waiting time : "+ srtf.getAverageWaitingTime() );
             System.out.println ("Average Turnaround time : "+srtf.getAverageTurnaroundTime () );
-
         }
 
         if (choiceNum == 3){
@@ -84,25 +83,25 @@ public class main {
                 System.out.println ( "Average Waiting time : "+ priority.getAverageWaiting ());
                 System.out.println ( "Average Turnaround time : "+ priority.getAverageTurnAround ());
             }
-            
+
         }
 
-       if (choiceNum == 4) {
+        if (choiceNum == 4) {
             AGAT a = new AGAT(processArrayList);
             a.printInfo();
         }
 
-       for(int i = 0; i < processArrayList.size(); i++){
-           System.out.print(processArrayList.get(i).getName() +" Factor- ");
-           for(int j =0; j<processArrayList.get(i).AGAT.size(); j++){
-               System.out.print(processArrayList.get(i).AGAT.get(j)+" ");
-           }
-           System.out.println();
-           System.out.print(processArrayList.get(i).getName() +" Quantum- ");
-           for(int j =0; j<processArrayList.get(i).quantumTime.size(); j++){
-               System.out.print(processArrayList.get(i).quantumTime.get(j)+" ");
-           }
-           System.out.println();
-       }
+        for(int i = 0; i < processArrayList.size(); i++){
+            System.out.print(processArrayList.get(i).getName() +" Factor- ");
+            for(int j =0; j<processArrayList.get(i).AGAT.size(); j++){
+                System.out.print(processArrayList.get(i).AGAT.get(j)+" ");
+            }
+            System.out.println();
+            System.out.print(processArrayList.get(i).getName() +" Quantum- ");
+            for(int j =0; j<processArrayList.get(i).quantumTime.size(); j++){
+                System.out.print(processArrayList.get(i).quantumTime.get(j)+" ");
+            }
+            System.out.println();
+        }
     }
 }
