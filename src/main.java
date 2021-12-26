@@ -69,7 +69,10 @@ public class main {
         }
 
         if (choiceNum == 2){
-
+            SRTF srtf = new SRTF(processArrayList,contextProcess);
+            srtf.start();
+            System.out.println ("Average Waiting time : "+ srtf.getAverageWaitingTime() );
+            System.out.println ("Average Turnaround time : "+srtf.getAverageTurnaroundTime () );
 
         }
 
