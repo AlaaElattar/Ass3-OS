@@ -159,7 +159,7 @@ public class AGAT {
                 Process temp = executeProcess();
 //                readyQueue.remove(inExecution);
 //                readyQueue.add(inExecution);
-                if (temp == null || (temp!=null && temp.factor >= inExecution.factor )) {
+                if (temp == null || (temp != null && temp.factor >= inExecution.factor)) {
                     time -= quantum40;
                     quantum40++;
                     i = 0;
@@ -193,5 +193,10 @@ public class AGAT {
         turnaround /= finishedProcesses.size();
         System.out.println("Average Waiting Time: " + waitingTime);
         System.out.println("Average Turnaroud Time: " + turnaround);
+        for(int i =0; i<finishedProcesses.size(); i++){
+            Process p = finishedProcesses.get(i);
+            System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
+        }
+
     }
 }

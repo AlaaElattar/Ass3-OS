@@ -4,16 +4,15 @@ public class PriorityScheduling {
     ArrayList<Process> Processes = new ArrayList<Process>();
     ArrayList<Process> WaitingQueue = new ArrayList<Process>();
     ArrayList<Process> executedProcesses = new ArrayList<Process>();
-    ArrayList<Process> copy ;
+    ArrayList<Process> copy;
     private int contextSwitching;
 
-    int curTime=0;
-    int agingValue =0;  //to solve starvation problem
+    int curTime = 0;
+    int agingValue = 0;  //to solve starvation problem
 
-    PriorityScheduling(ArrayList<Process> temp, int contextSwitching){
+    PriorityScheduling(ArrayList<Process> temp, int contextSwitching) {
         this.contextSwitching = contextSwitching;
-        for(Process i : temp)
-        {
+        for (Process i : temp) {
             Processes.add(new Process(i));
         }
 
@@ -25,30 +24,30 @@ public class PriorityScheduling {
 
     private void ConstructWaitingQueue(int currentTime) {
         WaitingQueue = new ArrayList<Process>();
-        for(int i = 0 ; i < Processes.size() ; i++ )
-            if(Processes.get(i).getArrivalTime() <= currentTime) {
+        for (int i = 0; i < Processes.size(); i++)
+            if (Processes.get(i).getArrivalTime() <= currentTime) {
                 WaitingQueue.add(Processes.get(i));
             }
-            else break;
     }
 
 
     public void start() {
         Process currentProcess = new Process();
 
-        while(Processes.size() > 0 ) {
-            if(FindMaxPriorityInWaiting()==null) {
+        while (Processes.size() > 0) {
+            if (FindMaxPriorityInWaiting() == null) {
                 curTime++;
                 ConstructWaitingQueue(curTime);
-            }
-            else {
+            } else {
                 currentProcess = FindMaxPriorityInWaiting();
 
-                currentProcess.setStartTime(curTime);
+                currentProcess.start.add(curTime);
                 curTime += currentProcess.getBurstTime();
+                currentProcess.end.add(curTime);
+                curTime += contextSwitching;
 
-                currentProcess.setWaitingTime( currentProcess.getStartTime() - currentProcess.getArrivalTime());
-                currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() + currentProcess.getBurstTime() );
+                currentProcess.setWaitingTime(currentProcess.start.get(0) - currentProcess.getArrivalTime());
+                currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() + currentProcess.getBurstTime());
 
                 executedProcesses.add(currentProcess);
                 Processes.remove(currentProcess);
@@ -59,17 +58,19 @@ public class PriorityScheduling {
 
             }
         }
+        printInfo();
     }
 
     private void AgingProcess(int time) {
         Process temp = new Process();
-        for(int i = 0 ; i < WaitingQueue.size() ; i++ ) {
+        time++;
+        for (int i = 0; i < WaitingQueue.size(); i++) {
             temp = WaitingQueue.get(i);
-            if(temp.getPriority() > 0 && temp!= FindMaxPriorityInWaiting()) {
+            if (temp.getPriority() > 0 && temp != FindMaxPriorityInWaiting()) {
                 int IncreasesPrioroty = (curTime - temp.getLastTimeAged()) / time;
 
-                if (IncreasesPrioroty <0){
-                    IncreasesPrioroty =0;
+                if (IncreasesPrioroty < 0) {
+                    IncreasesPrioroty = 0;
                 }
 
                 temp.setPriority(temp.getPriority() - IncreasesPrioroty);
@@ -80,46 +81,51 @@ public class PriorityScheduling {
 
     private Process FindMaxPriorityInWaiting() {
         Process maxPriority = null;
-        if(WaitingQueue.size()>0) {
+        if (WaitingQueue.size() > 0) {
             maxPriority = WaitingQueue.get(0);
-            for(int i = 1 ; i< WaitingQueue.size() ; i++) {
-                if(maxPriority.getPriority() >= WaitingQueue.get(i).getPriority()) {
-                    if(maxPriority.getPriority() == WaitingQueue.get(i).getPriority())
-                    {
-                        if (maxPriority.getArrivalTime() > WaitingQueue.get(i).getArrivalTime()){
-                            maxPriority = WaitingQueue.get ( i );
+            for (int i = 1; i < WaitingQueue.size(); i++) {
+                if (maxPriority.getPriority() >= WaitingQueue.get(i).getPriority()) {
+                    if (maxPriority.getPriority() == WaitingQueue.get(i).getPriority()) {
+                        if (maxPriority.getArrivalTime() > WaitingQueue.get(i).getArrivalTime()) {
+                            maxPriority = WaitingQueue.get(i);
                         }
-                    }
-                    else
+                    } else
                         maxPriority = WaitingQueue.get(i);
                 }
             }
         }
-        return maxPriority ;
+        return maxPriority;
     }
 
-    public int getAgingValue ( ) {
+    public int getAgingValue() {
         return agingValue;
     }
-    public void setAgingValue ( int agingValue ) {
+
+    public void setAgingValue(int agingValue) {
         this.agingValue = agingValue;
     }
 
     public double getAverageWaiting() {
         double sumOfWaiting = 0.0;
-        for(Process p : executedProcesses) {
-            sumOfWaiting+=p.getWaitingTime();
+        for (Process p : executedProcesses) {
+            sumOfWaiting += p.getWaitingTime();
         }
         return sumOfWaiting / executedProcesses.size();
     }
+
     public double getAverageTurnAround() {
         double sumOfTurnAround = 0.0;
-        for(Process p : executedProcesses) {
-            sumOfTurnAround+=p.getTurnaroundTime();
+        for (Process p : executedProcesses) {
+            sumOfTurnAround += p.getTurnaroundTime();
         }
         return sumOfTurnAround / executedProcesses.size();
     }
 
-
+    public void printInfo(){
+        for(int i =0; i<executedProcesses.size(); i++){
+            Process p = executedProcesses.get(i);
+            System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
+        }
+    }
 }
 

@@ -65,6 +65,10 @@ public class main {
             sjf.startScheduling ();
             System.out.println ("Average Waiting time : "+ sjf.getAverageTurnaroundTime () );
             System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
+            for(int i =0; i<processArrayList.size(); i++){
+                Process p = processArrayList.get(i);
+                System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
+            }
 
         }
 
@@ -76,29 +80,29 @@ public class main {
         if (choiceNum == 3){
             PriorityScheduling pScheduling = new PriorityScheduling(processArrayList,contextProcess);
             pScheduling.start();
-
             System.out.println( "\nAverage Waiting Time :  " + pScheduling.getAverageWaiting());
             System.out.println("Average Turnaround Time :" + pScheduling.getAverageTurnAround() + "\n");
-
-            
         }
 
        if (choiceNum == 4) {
             AGAT a = new AGAT(processArrayList);
             a.printInfo();
+           for(int i = 0; i < processArrayList.size(); i++){
+               System.out.print(processArrayList.get(i).getName() +" Factor- ");
+               for(int j =0; j<processArrayList.get(i).AGAT.size(); j++){
+                   System.out.print(processArrayList.get(i).AGAT.get(j)+" ");
+               }
+               System.out.println();
+               System.out.print(processArrayList.get(i).getName() +" Quantum- ");
+               for(int j =0; j<processArrayList.get(i).quantumTime.size(); j++){
+                   System.out.print(processArrayList.get(i).quantumTime.get(j)+" ");
+               }
+               System.out.println();
+           }
         }
 
-       for(int i = 0; i < processArrayList.size(); i++){
-           System.out.print(processArrayList.get(i).getName() +" Factor- ");
-           for(int j =0; j<processArrayList.get(i).AGAT.size(); j++){
-               System.out.print(processArrayList.get(i).AGAT.get(j)+" ");
-           }
-           System.out.println();
-           System.out.print(processArrayList.get(i).getName() +" Quantum- ");
-           for(int j =0; j<processArrayList.get(i).quantumTime.size(); j++){
-               System.out.print(processArrayList.get(i).quantumTime.get(j)+" ");
-           }
-           System.out.println();
-       }
+
+
+
     }
 }

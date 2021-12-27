@@ -9,7 +9,7 @@ public class SJF {
     }
 
     public void startScheduling ( ) {
-        int currTime = 1;
+        int currTime = 0;
         int currProcess = 0;
         for ( int i = 0 ; i < processes.size ( ) ; i++ ) {
             int temp = currProcess;
@@ -19,11 +19,12 @@ public class SJF {
                     currTime++;
                 }
             } while ( currProcess == - 1 );
-
+            processes.get(currProcess).start.add(currTime);
             processes.get ( currProcess ).Execute ( );
             processes.get ( currProcess ).setWaitingTime ( currTime - processes.get ( currProcess ).getArrivalTime ( ) );
             processes.get ( currProcess ).setTurnaroundTime ( processes.get ( currProcess ).getWaitingTime ( ) + processes.get ( currProcess ).getBurstTime ( ) );
             currTime += processes.get ( currProcess ).getBurstTime ( );
+            processes.get(currProcess).end.add(currTime);
             executedProcesses.add ( currProcess );
 
         }

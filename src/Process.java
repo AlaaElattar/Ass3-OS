@@ -12,8 +12,8 @@ public class Process implements Comparable<Process>
     ArrayList<Integer> quantumTime;
     ArrayList<Integer> AGAT;
     public int factor;
-    public ArrayList<Integer> start;
-    public ArrayList<Integer> end;
+    public ArrayList<Integer> start = new ArrayList<>();
+    public ArrayList<Integer> end = new ArrayList<>();
     public int pID;
     public static int id = 0;
     public int quantum;
@@ -22,7 +22,16 @@ public class Process implements Comparable<Process>
     private int endTime;
     private int lastTimeAged;
 
-    Process (){}
+    Process (){
+        quantumTime = new ArrayList<Integer>();
+        AGAT = new ArrayList<Integer>();
+        start = new ArrayList<Integer>();
+        end = new ArrayList<Integer>();
+        waitingTime = 0;
+        turnaroundTime = 0;
+        pID = ++id;
+        quantumTime.add(quantum);
+    }
 
     Process(Process p){
         name = p.getName ();
