@@ -46,16 +46,6 @@ public class SJF {
         return nextProcessNumber;
     }
 
-<<<<<<< Updated upstream
-=======
-    public void aging(int currTime){
-        for(int i =0; i<processes.size(); i++){
-            if(processes.get(i).getArrivalTime()<=currTime && processes.get(i).processingTime!=0)
-                processes.get(i).processingTime -= 1;
-        }
-    }
-
->>>>>>> Stashed changes
     public double getAverageWaitingTime ( ) {
         double sumOfWaiting = 0.0;
         for ( Process p : processes ) {
