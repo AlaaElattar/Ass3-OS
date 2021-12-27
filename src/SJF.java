@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SJF {
-    private ArrayList < Process > processes;
+    private ArrayList < Process > processes;    //all processes
     private ArrayList < Integer > executedProcesses = new ArrayList < Integer > ( );
 
-    SJF ( ArrayList < Process > processes ) {
+    SJF ( ArrayList <Process> processes ) {
         this.processes = processes;
     }
 
@@ -33,12 +32,12 @@ public class SJF {
     private int getNextProcessNumber ( int currTime ) {
         int nextProcessNumber = - 1;
         for ( int i = 0 ; i < processes.size ( ) ; i++ ) {
-            if ( ! executedProcesses.contains ( i ) && processes.get ( i ).getArrivalTime ( ) <= currTime ) { // the next process must be arrived and must have
-                // the lest BurstTime
+            // the next process must be arrived and must have the lest BurstTime
+            if ( ! executedProcesses.contains ( i ) && processes.get ( i ).getArrivalTime ( ) <= currTime ) {
                 if ( nextProcessNumber == - 1 ) {
                     nextProcessNumber = i;
                 } // if it's the first process
-                else if ( processes.get ( i ).getBurstTime ( ) < processes.get ( nextProcessNumber ).getBurstTime ( ) ) {
+                else if ( processes.get( i ).getBurstTime() < processes.get( nextProcessNumber ).getBurstTime ( ) ) {
                     nextProcessNumber = i;
                 }
             }

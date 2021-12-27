@@ -1,100 +1,110 @@
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
 
-//Non-Preemptive Priority Scheduling with context switching
 public class PriorityScheduling {
-    private Comparator<Process> sortProcesses;  //sort processes first, then put them in ready queue
-    private PriorityQueue < Process > readyQueue;
-    private ArrayList<Process> arrivalQueue;
-    private ArrayList<String>order;
-    private ArrayList<Process> executedProcesses=new ArrayList<> ();
-    int time;
+    ArrayList<Process> Processes = new ArrayList<Process>();
+    ArrayList<Process> WaitingQueue = new ArrayList<Process>();
+    ArrayList<Process> executedProcesses = new ArrayList<Process>();
+    ArrayList<Process> copy ;
+    private int contextSwitching;
 
-    PriorityScheduling(ArrayList<Process> arrivalQueue)
-    {
-        sortProcesses = Comparator.comparing ( Process::getPriority );
-        readyQueue = new PriorityQueue<Process> (sortProcesses);
-        order = new ArrayList <String> ();
-        time =0;
-        this.arrivalQueue = arrivalQueue;
-    }
+    int curTime=0;
+    int agingValue =0;  //to solve starvation problem
 
-    public boolean isDead(Process temp){
-        if (temp.getBurstTime ()==0){
-            return true;
-        }
-        return false;
-    }
-
-    public void resetPriority(Process temp, int val){
-        int priority = temp.getPriority ();
-        temp.setPriority (priority-val);
-    }
-
-    public void setWaitingTime(Process temp){
-        int arrivalTime = temp.getArrivalTime ();
-        int burstTime = temp.getBurstTime ( );
-        temp.setWaitingTime (time-(arrivalTime+burstTime));
-    }
-
-    private void afterSecond(Process currentProcess, int val){
-        if (!isDead(currentProcess)) {
-            int burst = currentProcess.getBurstTime ();
-            currentProcess.setBurstTime(burst - 1);
-            order.add(currentProcess.getName());
-        } else {
-            order.add(null);
-        }
-        time++;
-    }
-
-    public List<String>start( ArrayList<Process> arrivalQueue){
-
-        Process curProcess = new Process ();
-        int i=0;
-        int value=0;
-
-        while (true){
-            if (!arrivalQueue.isEmpty () && time< arrivalQueue.get ( 0 ).getArrivalTime ()){
-                order.add ( null );
-                time++;
-            }
-
-            while (i != arrivalQueue.size() && time >= arrivalQueue.get(i).getArrivalTime()) {
-                curProcess = arrivalQueue.get(i);   //from arrival queue to ready queue
-                readyQueue.add(curProcess);
-                i++;
-            }
-            break;
+    PriorityScheduling(ArrayList<Process> temp, int contextSwitching){
+        this.contextSwitching = contextSwitching;
+        for(Process i : temp)
+        {
+            Processes.add(new Process(i));
         }
 
-        curProcess = readyQueue.poll ();   //curProcess = first process in queue
-        executedProcesses.add ( curProcess );
-        while ( true ){
+        copy = new ArrayList<Process>(Processes);
+        Processes.sort(null);
+        curTime = Processes.get(0).getArrivalTime();
+        ConstructWaitingQueue(curTime);
+    }
 
-            if (readyQueue.isEmpty() && isDead(curProcess) && i == arrivalQueue.size())
-                break;
-
-            while (i < arrivalQueue.size() && time >= arrivalQueue.get(i).getArrivalTime()) {
-                resetPriority(arrivalQueue.get(i), value);
-                readyQueue.add(arrivalQueue.get(i));
-                i++;
+    private void ConstructWaitingQueue(int currentTime) {
+        WaitingQueue = new ArrayList<Process>();
+        for(int i = 0 ; i < Processes.size() ; i++ )
+            if(Processes.get(i).getArrivalTime() <= currentTime) {
+                WaitingQueue.add(Processes.get(i));
             }
+            else break;
+    }
 
-            if(isDead ( curProcess )){
-                setWaitingTime ( curProcess );
-                if(!readyQueue.isEmpty ()){
-                    curProcess=readyQueue.poll ();
-                    value--;
+
+    public void start() {
+        Process currentProcess = new Process();
+
+        while(Processes.size() > 0 ) {
+            if(FindMaxPriorityInWaiting()==null) {
+                curTime++;
+                ConstructWaitingQueue(curTime);
+            }
+            else {
+                currentProcess = FindMaxPriorityInWaiting();
+
+                currentProcess.setStartTime(curTime);
+                curTime += currentProcess.getBurstTime();
+
+                currentProcess.setWaitingTime( currentProcess.getStartTime() - currentProcess.getArrivalTime());
+                currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() + currentProcess.getBurstTime() );
+
+                executedProcesses.add(currentProcess);
+                Processes.remove(currentProcess);
+
+                ConstructWaitingQueue(curTime);
+                AgingProcess(agingValue);
+                currentProcess.Execute();
+
+            }
+        }
+    }
+
+    private void AgingProcess(int time) {
+        Process temp = new Process();
+        for(int i = 0 ; i < WaitingQueue.size() ; i++ ) {
+            temp = WaitingQueue.get(i);
+            if(temp.getPriority() > 0 && temp!= FindMaxPriorityInWaiting()) {
+                int IncreasesPrioroty = (curTime - temp.getLastTimeAged()) / time;
+
+                if (IncreasesPrioroty <0){
+                    IncreasesPrioroty =0;
+                }
+
+                temp.setPriority(temp.getPriority() - IncreasesPrioroty);
+                temp.setLastTimeAged(curTime + ((curTime - temp.getLastTimeAged()) % time));
+            }
+        }
+    }
+
+    private Process FindMaxPriorityInWaiting() {
+        Process maxPriority = null;
+        if(WaitingQueue.size()>0) {
+            maxPriority = WaitingQueue.get(0);
+            for(int i = 1 ; i< WaitingQueue.size() ; i++) {
+                if(maxPriority.getPriority() >= WaitingQueue.get(i).getPriority()) {
+                    if(maxPriority.getPriority() == WaitingQueue.get(i).getPriority())
+                    {
+                        if (maxPriority.getArrivalTime() > WaitingQueue.get(i).getArrivalTime()){
+                            maxPriority = WaitingQueue.get ( i );
+                        }
+                    }
+                    else
+                        maxPriority = WaitingQueue.get(i);
                 }
             }
-            afterSecond ( curProcess,value++);
-
         }
-        return order;
+        return maxPriority ;
     }
+
+    public int getAgingValue ( ) {
+        return agingValue;
+    }
+    public void setAgingValue ( int agingValue ) {
+        this.agingValue = agingValue;
+    }
+
     public double getAverageWaiting() {
         double sumOfWaiting = 0.0;
         for(Process p : executedProcesses) {
@@ -110,4 +120,6 @@ public class PriorityScheduling {
         return sumOfTurnAround / executedProcesses.size();
     }
 
+
 }
+

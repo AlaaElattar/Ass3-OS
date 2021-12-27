@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-public class Process {
+public class Process implements Comparable<Process>
+{
     private String name;
     private String color;
     private int arrivalTime;
@@ -17,8 +18,21 @@ public class Process {
     public static int id = 0;
     public int quantum;
     private int processingTime;
+    private int startTime;
+    private int endTime;
+    private int lastTimeAged;
 
-    Process(){}
+    Process (){}
+
+    Process(Process p){
+        name = p.getName ();
+        color = p.getColor ();
+        arrivalTime = p.getArrivalTime ();
+        burstTime = p.getBurstTime ();
+        priority = p.getPriority ();
+        turnaroundTime = p.getTurnaroundTime ();
+        waitingTime = p.getWaitingTime ();
+    }
 
     Process(String name, String color, int arrivalTime, int burstTime, int priority, int quantum) {
         this.name = name;
@@ -110,6 +124,22 @@ public class Process {
         this.quantumTime = quantumTime;
     }
 
+    public void setStartTime ( int startTime ) {
+        this.startTime = startTime;
+    }
+
+    public int getStartTime ( ) {
+        return startTime;
+    }
+
+    public void setLastTimeAged ( int lastTimeAged ) {
+        this.lastTimeAged = lastTimeAged;
+    }
+
+    public int getLastTimeAged ( ) {
+        return lastTimeAged;
+    }
+
     public void computeWaitingTurnaroundTime(){
         waitingTime = start.get(0) - arrivalTime;
         for (int i =1; i<start.size(); i++){
@@ -118,10 +148,16 @@ public class Process {
         turnaroundTime = end.get(end.size()-1) - arrivalTime;
     }
 
+
+
     void Execute(){
         System.out.println( "Process " + name );
         processingTime--;
     }
 
 
+    @Override
+    public int compareTo ( Process o ) {
+        return 0;
+    }
 }

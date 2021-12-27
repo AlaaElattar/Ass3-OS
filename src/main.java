@@ -74,13 +74,12 @@ public class main {
         }
 
         if (choiceNum == 3){
-            PriorityScheduling priority = new PriorityScheduling (processArrayList);
-            List<String>data = priority.start ( processArrayList );
-            for (String x:data){
-                System.out.println (x );
-                System.out.println ( "Average Waiting time : "+ priority.getAverageWaiting ());
-                System.out.println ( "Average Turnaround time : "+ priority.getAverageTurnAround ());
-            }
+            PriorityScheduling pScheduling = new PriorityScheduling(processArrayList,contextProcess);
+            pScheduling.start();
+
+            System.out.println( "\nAverage Waiting Time :  " + pScheduling.getAverageWaiting());
+            System.out.println("Average Turnaround Time :" + pScheduling.getAverageTurnAround() + "\n");
+
             
         }
 
