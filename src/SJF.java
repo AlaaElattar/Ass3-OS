@@ -26,6 +26,7 @@ public class SJF {
             processes.get ( currProcess ).setTurnaroundTime ( processes.get ( currProcess ).getWaitingTime ( ) + processes.get ( currProcess ).getBurstTime ( ) );
             currTime += processes.get ( currProcess ).getBurstTime ( );
             executedProcesses.add ( currProcess );
+            aging(currTime);
 
         }
     }
@@ -38,12 +39,19 @@ public class SJF {
                 if ( nextProcessNumber == - 1 ) {
                     nextProcessNumber = i;
                 } // if it's the first process
-                else if ( processes.get ( i ).getBurstTime ( ) < processes.get ( nextProcessNumber ).getBurstTime ( ) ) {
+                else if ( processes.get ( i ).processingTime< processes.get ( nextProcessNumber ).processingTime ) {
                     nextProcessNumber = i;
                 }
             }
         }
         return nextProcessNumber;
+    }
+
+    public void aging(int currTime){
+        for(int i =0; i<processes.size(); i++){
+            if(processes.get(i).getArrivalTime()<=currTime)
+                processes.get(i).processingTime -= 1;
+        }
     }
 
     public double getAverageWaitingTime ( ) {

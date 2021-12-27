@@ -16,7 +16,7 @@ public class Process {
     public int pID;
     public static int id = 0;
     public int quantum;
-    private int processingTime;
+    public int processingTime;
 
     Process(){}
 
@@ -35,6 +35,7 @@ public class Process {
         turnaroundTime = 0;
         pID = ++id;
         quantumTime.add(quantum);
+        processingTime = burstTime;
     }
 
     public int getArrivalTime() {

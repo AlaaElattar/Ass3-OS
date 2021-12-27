@@ -63,7 +63,7 @@ public class main {
         if (choiceNum == 1){
             SJF  sjf = new SJF ( processArrayList );
             sjf.startScheduling ();
-            System.out.println ("Average Waiting time : "+ sjf.getAverageTurnaroundTime () );
+            System.out.println ("Average Waiting time : "+ sjf.getAverageWaitingTime () );
             System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
 
         }
