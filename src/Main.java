@@ -288,9 +288,13 @@ public class Main extends javax.swing.JFrame {
         if (choiceNum == 1){
             SJF  sjf = new SJF (  mainMethod.processArrayList );
             sjf.startScheduling ();
-            System.out.println ("Average Waiting time : "+ sjf.getAverageTurnaroundTime () );
+            for(int i =0; i<mainMethod.processArrayList.size(); i++){
+                Process p = mainMethod.processArrayList.get(i);
+                System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
+            }
+            System.out.println ("Average Waiting time : "+ sjf.getAverageWaitingTime () );
             System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
-            mainMethod.AWT.setText(sjf.getAverageTurnaroundTime () + "");
+            mainMethod.AWT.setText(sjf.getAverageWaitingTime() + "");
             mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
             mainMethod.ScheduleName.setText("SJFSchedule");
 
