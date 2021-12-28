@@ -8,6 +8,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.gantt.Task;
 import org.jfree.data.gantt.TaskSeries;
@@ -15,6 +16,7 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -33,6 +35,17 @@ public class GanttChart extends JFrame
                 dataSet);
 
         CategoryPlot plot = chart.getCategoryPlot();
+        CategoryItemRenderer renderer = plot.getRenderer();
+        for(int i =0; i<p.size(); i++){
+            Color color;
+            try {
+                Field field = Class.forName("java.awt.Color").getField(p.get(i).getColor());
+                color = (Color)field.get(null);
+            } catch (Exception e) {
+                color = null; // Not defined
+            }
+            renderer.setSeriesPaint(i, color);
+        }
         DateAxis axis = (DateAxis) plot.getRangeAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("SS"));
 

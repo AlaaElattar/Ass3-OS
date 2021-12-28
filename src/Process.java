@@ -169,4 +169,8 @@ public class Process implements Comparable<Process>
     public int compareTo ( Process o ) {
         return 0;
     }
+
+    public Object getpID() {
+        return pID;
+    }
 }
