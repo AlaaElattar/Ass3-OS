@@ -1,33 +1,27 @@
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import javax.swing.*;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.IntervalCategoryDataset;
-import org.jfree.data.gantt.Task;
-import org.jfree.data.gantt.TaskSeries;
-import org.jfree.data.gantt.TaskSeriesCollection;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 
-
-public class Main extends JFrame {
+/**
+ *
+ * @author DOHA
+ */
+public class Main extends javax.swing.JFrame {
 
     DefaultTableModel tableModel;
-
+    ArrayList<Process> processArrayList;
     /**
-     * Creates new form JTable
+     * Creates new form Main
      */
     public Main() {
         initComponents();
-
         tableModel = (DefaultTableModel) jTable1.getModel();
         jTable1.setModel(tableModel);
 
@@ -42,8 +36,6 @@ public class Main extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        mainPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -55,14 +47,13 @@ public class Main extends JFrame {
         ATAT = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
-        setName("panel"); // NOI18N
-        setUndecorated(true);
+        setBackground(new java.awt.Color(0, 0, 0));
 
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBackground(new java.awt.Color(51, 51, 51));
+        jTable1.setBackground(new java.awt.Color(0, 0, 0));
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -78,6 +69,7 @@ public class Main extends JFrame {
         jTable1.setEditingRow(1);
         jTable1.setName("panel"); // NOI18N
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -124,7 +116,7 @@ public class Main extends JFrame {
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(AWT)))
-                                .addContainerGap(306, Short.MAX_VALUE))
+                                .addContainerGap(495, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,40 +138,17 @@ public class Main extends JFrame {
                                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Processes Information");
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 705, Short.MAX_VALUE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                                        .addGap(401, 401, 401)
-                                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addContainerGap(24, Short.MAX_VALUE)))
-        );
-        mainPanelLayout.setVerticalGroup(
-                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 487, Short.MAX_VALUE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap()))
-        );
+        jButton1.setText("click here to show the CPU Scheduling Graph");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,28 +156,46 @@ public class Main extends JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addContainerGap(705, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButton1))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(38, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addContainerGap()
-                                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(141, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addGap(359, 359, 359))
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                                                .addGap(139, 139, 139))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(137, 137, 137)
+                                                .addComponent(jButton1)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addContainerGap(330, Short.MAX_VALUE)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap()))
         );
 
         pack();
     }// </editor-fold>
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        GanttChart gc = new GanttChart("CPU scheduling", processArrayList);
+    }
 
 
 
@@ -226,12 +213,33 @@ public class Main extends JFrame {
         return num;
 
     }
-
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
         Main mainMethod = new Main();
 
-        ArrayList<Process> processArrayList = new ArrayList<>();
+        mainMethod.processArrayList = new ArrayList<>();
         String name;
         String color;
         int arrivalTime;
@@ -269,7 +277,7 @@ public class Main extends JFrame {
             rrQuantum = input.nextInt();
 
             Process p = new Process(name, color, arrivalTime, burstTime, priorityNum, rrQuantum);
-            processArrayList.add(p);
+            mainMethod.processArrayList.add(p);
         }
 
 
@@ -278,12 +286,13 @@ public class Main extends JFrame {
         choiceNum = menu();
 
         if (choiceNum == 1){
-            SJF  sjf = new SJF ( processArrayList );
+            SJF  sjf = new SJF (  mainMethod.processArrayList );
             sjf.startScheduling ();
             System.out.println ("Average Waiting time : "+ sjf.getAverageTurnaroundTime () );
             System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
             mainMethod.AWT.setText(sjf.getAverageTurnaroundTime () + "");
             mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
+
 
         }
 
@@ -293,80 +302,80 @@ public class Main extends JFrame {
         }
 
         if (choiceNum == 3){
-            PriorityScheduling pScheduling = new PriorityScheduling(processArrayList,contextProcess);
+            PriorityScheduling pScheduling = new PriorityScheduling( mainMethod.processArrayList,contextProcess);
             pScheduling.start();
             System.out.println( "\nAverage Waiting Time :  " + pScheduling.getAverageWaiting());
             System.out.println("Average Turnaround Time :" + pScheduling.getAverageTurnAround() + "\n");
         }
 
         if (choiceNum == 4) {
-            AGAT a = new AGAT(processArrayList);
+            AGAT a = new AGAT( mainMethod.processArrayList);
             a.printInfo();
-            for(int i = 0; i < processArrayList.size(); i++){
-                System.out.print(processArrayList.get(i).getName() +" Factor- ");
-                for(int j =0; j<processArrayList.get(i).AGAT.size(); j++){
-                    System.out.print(processArrayList.get(i).AGAT.get(j)+" ");
+            for(int i = 0; i <  mainMethod.processArrayList.size(); i++){
+                System.out.print( mainMethod.processArrayList.get(i).getName() +" Factor- ");
+                for(int j =0; j< mainMethod.processArrayList.get(i).AGAT.size(); j++){
+                    System.out.print( mainMethod.processArrayList.get(i).AGAT.get(j)+" ");
                 }
                 System.out.println();
-                System.out.print(processArrayList.get(i).getName() +" Quantum- ");
-                for(int j =0; j<processArrayList.get(i).quantumTime.size(); j++){
-                    System.out.print(processArrayList.get(i).quantumTime.get(j)+" ");
+                System.out.print( mainMethod.processArrayList.get(i).getName() +" Quantum- ");
+                for(int j =0; j< mainMethod.processArrayList.get(i).quantumTime.size(); j++){
+                    System.out.print( mainMethod.processArrayList.get(i).quantumTime.get(j)+" ");
                 }
                 System.out.println();
             }
+//            mainMethod.AWT.setText(sjf.getAverageTurnaroundTime () + "");
+//            mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
         }
 
-        for(int i = 0; i < processArrayList.size(); i++){
-            System.out.print(processArrayList.get(i).getName() +" Factor- ");
-            for(int j =0; j<processArrayList.get(i).AGAT.size(); j++){
-                System.out.print(processArrayList.get(i).AGAT.get(j)+" ");
+        for(int i = 0; i <  mainMethod.processArrayList.size(); i++){
+            System.out.print( mainMethod.processArrayList.get(i).getName() +" Factor- ");
+            for(int j =0; j< mainMethod.processArrayList.get(i).AGAT.size(); j++){
+                System.out.print( mainMethod.processArrayList.get(i).AGAT.get(j)+" ");
             }
             System.out.println();
-            System.out.print(processArrayList.get(i).getName() +" Quantum- ");
-            for(int j =0; j<processArrayList.get(i).quantumTime.size(); j++){
-                System.out.print(processArrayList.get(i).quantumTime.get(j)+" ");
+            System.out.print( mainMethod.processArrayList.get(i).getName() +" Quantum- ");
+            for(int j =0; j< mainMethod.processArrayList.get(i).quantumTime.size(); j++){
+                System.out.print( mainMethod.processArrayList.get(i).quantumTime.get(j)+" ");
             }
             System.out.println();
         }
 
         mainMethod.ScheduleName.setText("ABCSchedule");
 
-        for (Process process : processArrayList) {
+        for (Process process :  mainMethod.processArrayList) {
             mainMethod.tableModel.addRow(new Object[]{
-                    processArrayList.indexOf(process), process.getColor(), process.getName(), process.getpID(), process.getPriority()
+                    mainMethod.processArrayList.indexOf(process), process.getColor(), process.getName(), process.getpID(), process.getPriority()
             });
         }
 
-        GanttChart gc = new GanttChart("CPU scheduling", processArrayList);
+
 
 
         mainMethod.tableModel.fireTableDataChanged();
         mainMethod.setLocationRelativeTo(null);
         mainMethod.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainMethod.setVisible(true);
+        /* Create and display the form */
 
     }
-
-
-
-
-
-
 
     // Variables declaration - do not modify
     private javax.swing.JLabel ATAT;
     private javax.swing.JLabel AWT;
     private javax.swing.JLabel ScheduleName;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JPanel mainPanel;
     // End of variables declaration
 }
+
+
+
+
 
