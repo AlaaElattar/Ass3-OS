@@ -178,25 +178,30 @@ public class AGAT {
         }
     }
 
-    public void printInfo() {
+    public double getAverageWaitingTime(){
         double waitingTime = 0;
-        double turnaround = 0;
         for (int i = 0; i < finishedProcesses.size(); i++) {
             waitingTime += finishedProcesses.get(i).waitingTime;
+        }
+        return waitingTime/finishedProcesses.size();
+    }
+    public double getAverageTurnaroundTime(){
+        double turnaround = 0;
+        for (int i = 0; i < finishedProcesses.size(); i++) {
             turnaround += finishedProcesses.get(i).getTurnaroundTime();
         }
+        return turnaround/finishedProcesses.size();
+    }
+    public void printInfo() {
         System.out.println("Process execution order: ");
         for (int i = 0; i < processExecutionOrder.size(); i++)
             System.out.print(processExecutionOrder.get(i) + " ");
         System.out.println();
-        waitingTime /= finishedProcesses.size();
-        turnaround /= finishedProcesses.size();
-        System.out.println("Average Waiting Time: " + waitingTime);
-        System.out.println("Average Turnaroud Time: " + turnaround);
+        System.out.println("Average Waiting Time: " + getAverageWaitingTime());
+        System.out.println("Average Turnaroud Time: " + getAverageTurnaroundTime());
         for(int i =0; i<finishedProcesses.size(); i++){
             Process p = finishedProcesses.get(i);
             System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
         }
-
     }
 }
