@@ -17,11 +17,12 @@ public class Process implements Comparable<Process>
     public int pID;
     public static int id = 0;
     public int quantum;
-    private int processingTime;
-    private int startTime;
-    private int endTime;
+
     private int lastTimeAged;
     public int secPriority;
+
+    public int processingTime;
+
 
     Process (){
         quantumTime = new ArrayList<Integer>();
@@ -59,7 +60,11 @@ public class Process implements Comparable<Process>
         turnaroundTime = 0;
         pID = ++id;
         quantumTime.add(quantum);
+
         secPriority = priority;
+
+        processingTime = burstTime;
+
     }
 
     public int getArrivalTime() {
@@ -135,13 +140,6 @@ public class Process implements Comparable<Process>
         this.quantumTime = quantumTime;
     }
 
-    public void setStartTime ( int startTime ) {
-        this.startTime = startTime;
-    }
-
-    public int getStartTime ( ) {
-        return startTime;
-    }
 
     public void setLastTimeAged ( int lastTimeAged ) {
         this.lastTimeAged = lastTimeAged;
