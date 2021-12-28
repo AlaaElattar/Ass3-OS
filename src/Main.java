@@ -292,6 +292,7 @@ public class Main extends javax.swing.JFrame {
             System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
             mainMethod.AWT.setText(sjf.getAverageTurnaroundTime () + "");
             mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
+            mainMethod.ScheduleName.setText("SJFSchedule");
 
 
         }
@@ -306,6 +307,8 @@ public class Main extends javax.swing.JFrame {
             pScheduling.start();
             System.out.println( "\nAverage Waiting Time :  " + pScheduling.getAverageWaiting());
             System.out.println("Average Turnaround Time :" + pScheduling.getAverageTurnAround() + "\n");
+            mainMethod.processArrayList = pScheduling.getExecutedProcesses();
+            mainMethod.ScheduleName.setText("PrioritySchedule");
         }
 
         if (choiceNum == 4) {
@@ -322,25 +325,12 @@ public class Main extends javax.swing.JFrame {
                     System.out.print( mainMethod.processArrayList.get(i).quantumTime.get(j)+" ");
                 }
                 System.out.println();
+                mainMethod.ScheduleName.setText("AGATSchedule");
             }
 //            mainMethod.AWT.setText(sjf.getAverageTurnaroundTime () + "");
 //            mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
         }
 
-        for(int i = 0; i <  mainMethod.processArrayList.size(); i++){
-            System.out.print( mainMethod.processArrayList.get(i).getName() +" Factor- ");
-            for(int j =0; j< mainMethod.processArrayList.get(i).AGAT.size(); j++){
-                System.out.print( mainMethod.processArrayList.get(i).AGAT.get(j)+" ");
-            }
-            System.out.println();
-            System.out.print( mainMethod.processArrayList.get(i).getName() +" Quantum- ");
-            for(int j =0; j< mainMethod.processArrayList.get(i).quantumTime.size(); j++){
-                System.out.print( mainMethod.processArrayList.get(i).quantumTime.get(j)+" ");
-            }
-            System.out.println();
-        }
-
-        mainMethod.ScheduleName.setText("ABCSchedule");
 
         for (Process process :  mainMethod.processArrayList) {
             mainMethod.tableModel.addRow(new Object[]{

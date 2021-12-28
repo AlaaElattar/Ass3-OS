@@ -36,7 +36,7 @@ public class GanttChart extends JFrame
 
         CategoryPlot plot = chart.getCategoryPlot();
         CategoryItemRenderer renderer = plot.getRenderer();
-        for(int i =0; i<p.size(); i++){
+        for(int i =0; i<dataSet.getRowCount(); i++){
             Color color;
             try {
                 Field field = Class.forName("java.awt.Color").getField(p.get(i).getColor());
@@ -53,7 +53,7 @@ public class GanttChart extends JFrame
         setContentPane(panel);
 
         SwingUtilities.invokeLater(() -> {
-            this.setSize(1000, 800);
+            this.setSize(800, 600);
             this.setLocationRelativeTo(null);
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.setVisible(true);

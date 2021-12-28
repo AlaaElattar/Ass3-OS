@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class PriorityScheduling {
     ArrayList<Process> Processes = new ArrayList<Process>();
+    ArrayList<Process> aProcesses = new ArrayList<Process>();
     ArrayList<Process> WaitingQueue = new ArrayList<Process>();
     ArrayList<Process> executedProcesses = new ArrayList<Process>();
     ArrayList<Process> copy;
@@ -13,7 +14,7 @@ public class PriorityScheduling {
     PriorityScheduling(ArrayList<Process> temp, int contextSwitching) {
         this.contextSwitching = contextSwitching;
         for (Process i : temp) {
-            Processes.add(new Process(i));
+            Processes.add(i);
         }
 
         copy = new ArrayList<Process>(Processes);
@@ -66,15 +67,16 @@ public class PriorityScheduling {
         time++;
         for (int i = 0; i < WaitingQueue.size(); i++) {
             temp = WaitingQueue.get(i);
-            if (temp.getPriority() > 0 && temp != FindMaxPriorityInWaiting()) {
+            if (temp.secPriority > 0 && temp != FindMaxPriorityInWaiting()) {
                 int IncreasesPrioroty = (curTime - temp.getLastTimeAged()) / time;
+                temp.secPriority = (temp.secPriority - IncreasesPrioroty);
+                temp.setLastTimeAged(curTime + ((curTime - temp.getLastTimeAged()) % time));
 
-                if (IncreasesPrioroty < 0) {
-                    IncreasesPrioroty = 0;
+                if (temp.secPriority < 0) {
+                    temp.secPriority = 0;
                 }
 
-                temp.setPriority(temp.getPriority() - IncreasesPrioroty);
-                temp.setLastTimeAged(curTime + ((curTime - temp.getLastTimeAged()) % time));
+
             }
         }
     }
@@ -84,8 +86,8 @@ public class PriorityScheduling {
         if (WaitingQueue.size() > 0) {
             maxPriority = WaitingQueue.get(0);
             for (int i = 1; i < WaitingQueue.size(); i++) {
-                if (maxPriority.getPriority() >= WaitingQueue.get(i).getPriority()) {
-                    if (maxPriority.getPriority() == WaitingQueue.get(i).getPriority()) {
+                if (maxPriority.secPriority >= WaitingQueue.get(i).secPriority) {
+                    if (maxPriority.secPriority == WaitingQueue.get(i).secPriority) {
                         if (maxPriority.getArrivalTime() > WaitingQueue.get(i).getArrivalTime()) {
                             maxPriority = WaitingQueue.get(i);
                         }
@@ -121,10 +123,19 @@ public class PriorityScheduling {
         return sumOfTurnAround / executedProcesses.size();
     }
 
+    public ArrayList<Process> getExecutedProcesses() {
+        return executedProcesses;
+    }
+
     public void printInfo(){
         for(int i =0; i<executedProcesses.size(); i++){
             Process p = executedProcesses.get(i);
             System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
+        }
+        System.out.println();
+        for(int i =0; i<executedProcesses.size(); i++){
+            Process p = executedProcesses.get(i);
+            System.out.println(p.getpID() +"   "+p.getPriority());
         }
     }
 }
