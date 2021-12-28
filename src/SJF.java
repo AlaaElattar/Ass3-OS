@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class SJF {
+
     private ArrayList < Process > processes;    //all processes
     private ArrayList < Integer > executedProcesses = new ArrayList < Integer > ( );
 
@@ -11,13 +12,14 @@ public class SJF {
     public void startScheduling ( ) {
         int currTime = 0;
         int currProcess = 0;
-        for ( int i = 0 ; i < processes.size ( ) ; i++ ) {
+        for (int i = 0; i < processes.size(); i++) {
             int temp = currProcess;
             do {
-                currProcess = getNextProcessNumber ( currTime );
-                if ( currProcess == - 1 ) {
+                currProcess = getNextProcessNumber(currTime);
+                if (currProcess == -1) {
                     currTime++;
                 }
+
             } while ( currProcess == - 1 );
             processes.get(currProcess).start.add(currTime);
             processes.get ( currProcess ).Execute ( );
@@ -27,18 +29,22 @@ public class SJF {
             processes.get(currProcess).end.add(currTime);
             executedProcesses.add ( currProcess );
 
+            aging(currTime);
+
+
         }
     }
 
-    private int getNextProcessNumber ( int currTime ) {
-        int nextProcessNumber = - 1;
-        for ( int i = 0 ; i < processes.size ( ) ; i++ ) {
-            // the next process must be arrived and must have the lest BurstTime
-            if ( ! executedProcesses.contains ( i ) && processes.get ( i ).getArrivalTime ( ) <= currTime ) {
-                if ( nextProcessNumber == - 1 ) {
+
+    private int getNextProcessNumber(int currTime) {
+        int nextProcessNumber = -1;
+        for (int i = 0; i < processes.size(); i++) {
+            if (!executedProcesses.contains(i) && processes.get(i).getArrivalTime() <= currTime) { // the next process must be arrived and must have
+                // the lest BurstTime
+                if (nextProcessNumber == -1) {
                     nextProcessNumber = i;
                 } // if it's the first process
-                else if ( processes.get( i ).getBurstTime() < processes.get( nextProcessNumber ).getBurstTime ( ) ) {
+                else if (processes.get(i).processingTime < processes.get(nextProcessNumber).processingTime) {
                     nextProcessNumber = i;
                 }
             }
@@ -46,21 +52,28 @@ public class SJF {
         return nextProcessNumber;
     }
 
-    public double getAverageWaitingTime ( ) {
-        double sumOfWaiting = 0.0;
-        for ( Process p : processes ) {
-            sumOfWaiting += p.getWaitingTime ( );
+    public void aging(int currTime) {
+        for (int i = 0; i < processes.size(); i++) {
+            if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).processingTime != 0)
+                processes.get(i).processingTime -= 1;
         }
-        return sumOfWaiting / processes.size ( );
     }
 
-    public double getAverageTurnaroundTime ( ) {
+    public double getAverageWaitingTime() {
+        double sumOfWaiting = 0.0;
+        for (Process p : processes) {
+            sumOfWaiting += p.getWaitingTime();
+        }
+        return sumOfWaiting / processes.size();
+    }
+
+    public double getAverageTurnaroundTime() {
         double sumOfTurnAround = 0.0;
-        for ( Process p : processes ) {
-            sumOfTurnAround += p.getTurnaroundTime ( );
+        for (Process p : processes) {
+            sumOfTurnAround += p.getTurnaroundTime();
         }
 
-        return sumOfTurnAround / processes.size ( );
+        return sumOfTurnAround / processes.size();
     }
 
 }

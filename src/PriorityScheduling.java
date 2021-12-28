@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class PriorityScheduling {
     ArrayList<Process> Processes = new ArrayList<Process>();
-    ArrayList<Process> aProcesses = new ArrayList<Process>();
     ArrayList<Process> WaitingQueue = new ArrayList<Process>();
     ArrayList<Process> executedProcesses = new ArrayList<Process>();
     ArrayList<Process> copy;
