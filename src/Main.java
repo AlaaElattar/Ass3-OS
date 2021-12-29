@@ -17,9 +17,7 @@ public class Main extends javax.swing.JFrame {
 
     DefaultTableModel tableModel;
     ArrayList<Process> processArrayList;
-    /**
-     * Creates new form Main
-     */
+
     public Main() {
         initComponents();
         tableModel = (DefaultTableModel) jTable1.getModel();
@@ -214,28 +212,7 @@ public class Main extends javax.swing.JFrame {
 
     }
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+
 
         Main mainMethod = new Main();
 
@@ -295,9 +272,8 @@ public class Main extends javax.swing.JFrame {
             System.out.println ("Average Waiting time : "+ sjf.getAverageWaitingTime () );
             System.out.println ("Average Turnaround time : "+sjf.getAverageTurnaroundTime () );
             mainMethod.AWT.setText(sjf.getAverageWaitingTime() + "");
-            mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
+            mainMethod.ATAT.setText(sjf.getAverageTurnaroundTime () + "");
             mainMethod.ScheduleName.setText("SJFSchedule");
-
 
         }
 
@@ -329,10 +305,11 @@ public class Main extends javax.swing.JFrame {
                     System.out.print( mainMethod.processArrayList.get(i).quantumTime.get(j)+" ");
                 }
                 System.out.println();
-                mainMethod.ScheduleName.setText("AGATSchedule");
+
             }
-//            mainMethod.AWT.setText(sjf.getAverageTurnaroundTime () + "");
-//            mainMethod.ATAT.setText("" + sjf.getAverageTurnaroundTime ());
+            mainMethod.ScheduleName.setText("AGATSchedule");
+            mainMethod.AWT.setText(a.getAverageTurnaroundTime () + "");
+            mainMethod.ATAT.setText( a.getAverageTurnaroundTime () + "");
         }
 
 
@@ -349,7 +326,7 @@ public class Main extends javax.swing.JFrame {
         mainMethod.setLocationRelativeTo(null);
         mainMethod.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainMethod.setVisible(true);
-        /* Create and display the form */
+
 
     }
 
