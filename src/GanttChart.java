@@ -29,7 +29,7 @@ public class GanttChart extends JFrame
         IntervalCategoryDataset dataSet = getCategoryDataset(p);
 
         JFreeChart chart = ChartFactory.createGanttChart(
-                ("Gantt Chart " + title), // Chart title
+                (title), // Chart title
                 "Process", // X-Axis Label
                 "Time(ms)", // Y-Axis Label
                 dataSet);

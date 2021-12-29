@@ -192,7 +192,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        GanttChart gc = new GanttChart("CPU scheduling", processArrayList);
+        GanttChart gc = new GanttChart("CPU Scheduling Graph", processArrayList);
     }
 
 
@@ -229,8 +229,8 @@ public class Main extends javax.swing.JFrame {
         int rrQuantum;
         int contextProcess;
         int choiceNum;
-        
-        System.out.println("Enter number of process");
+
+        System.out.println("Enter number of processes");
         numOfProcess = input.nextInt();
 
 
@@ -238,17 +238,12 @@ public class Main extends javax.swing.JFrame {
         contextProcess = input.nextInt();
 
         for (int i = 0; i < numOfProcess; i++) {
-            System.out.println("Enter process name");
+            System.out.println("Enter the process properties is this order space separated: name, color, arrival time, burst time,process priority and process quantum");
             name = input.next();
-            System.out.println("Enter process color");
             color = input.next();
-            System.out.println("Enter process arrival time");
             arrivalTime = input.nextInt();
-            System.out.println("Enter process burst time");
             burstTime = input.nextInt();
-            System.out.println("Enter process priority");
             priorityNum = input.nextInt();
-            System.out.println("Enter process quantum");
             rrQuantum = input.nextInt();
 
             Process p = new Process(name, color, arrivalTime, burstTime, priorityNum, rrQuantum);
@@ -283,10 +278,12 @@ public class Main extends javax.swing.JFrame {
         if (choiceNum == 3){
             PriorityScheduling pScheduling = new PriorityScheduling( mainMethod.processArrayList,contextProcess);
             pScheduling.start();
-            System.out.println( "\nAverage Waiting Time :  " + pScheduling.getAverageWaiting());
-            System.out.println("Average Turnaround Time :" + pScheduling.getAverageTurnAround() + "\n");
+            System.out.println( "\nAverage Waiting Time :  " + pScheduling.getAverageWaitingTime());
+            System.out.println("Average Turnaround Time :" + pScheduling.getAverageTurnaroundTime() + "\n");
             mainMethod.processArrayList = pScheduling.getExecutedProcesses();
             mainMethod.ScheduleName.setText("PrioritySchedule");
+            mainMethod.AWT.setText(pScheduling.getAverageWaitingTime() + "");
+            mainMethod.ATAT.setText(pScheduling.getAverageTurnaroundTime () + "");
         }
 
         if (choiceNum == 4) {

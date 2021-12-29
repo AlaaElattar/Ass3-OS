@@ -106,7 +106,7 @@ public class PriorityScheduling {
         this.agingValue = agingValue;
     }
 
-    public double getAverageWaiting() {
+    public double getAverageWaitingTime() {
         double sumOfWaiting = 0.0;
         for (Process p : executedProcesses) {
             sumOfWaiting += p.getWaitingTime();
@@ -114,7 +114,7 @@ public class PriorityScheduling {
         return sumOfWaiting / executedProcesses.size();
     }
 
-    public double getAverageTurnAround() {
+    public double getAverageTurnaroundTime() {
         double sumOfTurnAround = 0.0;
         for (Process p : executedProcesses) {
             sumOfTurnAround += p.getTurnaroundTime();
