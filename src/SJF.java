@@ -54,7 +54,7 @@ public class SJF {
 
     public void aging(int currTime) {
         for (int i = 0; i < processes.size(); i++) {
-            if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).processingTime != 0)
+            if (processes.get(i).getArrivalTime() <= currTime)
                 processes.get(i).processingTime -= 1;
         }
     }
