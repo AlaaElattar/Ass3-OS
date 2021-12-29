@@ -14,58 +14,68 @@ public class SRTF {
         int complete = 0;
         int shortest = Integer.MAX_VALUE;
         int length = processes.size();
-        int shortestIndex = 0;
         int finish_time;
         boolean check = false;
-        ArrayList<Integer> bt = new ArrayList<>();
-        int contextSwitchTime = 0;
         Process prevProcess = new Process();
         Process currProcess = new Process();
-        for (int i = 0; i < length; i++) {
-            bt.add(processes.get(i).getBurstTime());
-        }
         while (complete != length) {
             for (int i = 0; i < length; i++) {
-                if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).getBurstTime() <= shortest
+                if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).processingTime <= shortest
                         && processes.get(i).getBurstTime() != 0) {
-                    if (processes.get(i).getBurstTime() == shortest
+                    if (processes.get(i).processingTime == shortest
                             && processes.get(i).getArrivalTime() > currProcess.getArrivalTime()) {
                         continue;
                     } else {
-                        shortest = processes.get(i).getBurstTime();
+                        shortest = processes.get(i).processingTime;
                         currProcess = processes.get(i);
-                        shortestIndex = i;
                         check = true;
                     }
                 }
             }
-            if (check == false) {
+            if (!check) {
                 currTime++;
                 continue;
             }
             if (currTime == 0) {
                 currProcess.Execute();
+                currProcess.start.add(currTime);
+                aging(currTime);
             }
             if (!(currProcess.equals(prevProcess)) && currTime != 0) {
                 currProcess.Execute();
-                contextSwitchTime += contextSwitch;
+                if (prevProcess.getBurstTime() != 0) prevProcess.end.add(currTime);
+                currTime += contextSwitch;
+                currProcess.start.add(currTime);
+                aging(currTime);
             }
-
             int updatedBt = currProcess.getBurstTime() - 1;
             currProcess.setBurstTime(updatedBt);
 
-            shortest--;
+
+            if (currProcess.equals(prevProcess)) {
+                currProcess.processingTime -= 1;
+            }
+
+            shortest = currProcess.processingTime;
             if (shortest == 0) shortest = Integer.MAX_VALUE;
 
             if (currProcess.getBurstTime() == 0) {
                 complete++;
-                finish_time = currTime + contextSwitchTime + 1;
+                finish_time = currTime + 1;
+                currProcess.end.add(finish_time);
+                currProcess.computeWaitingTurnaroundTime();
                 check = false;
-                currProcess.setWaitingTime(finish_time - currProcess.getArrivalTime() - bt.get(shortestIndex));
-                currProcess.setTurnaroundTime(finish_time - currProcess.getArrivalTime());
+                shortest = Integer.MAX_VALUE;
             }
             currTime++;
             prevProcess = currProcess;
+        }
+    }
+
+    public void aging(int currTime) {
+        for (int i = 0; i < processes.size(); i++) {
+            if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).processingTime != 0)
+                processes.get(i).processingTime -= 1;
         }
     }
 
@@ -86,6 +96,3 @@ public class SRTF {
         return sumOfTurnAround / processes.size();
     }
 }
-
-
-
