@@ -270,6 +270,12 @@ public class Main extends javax.swing.JFrame {
         if (choiceNum == 2){
             SRTF srtf = new SRTF(mainMethod.processArrayList,contextProcess);
             srtf.start();
+            System.out.println ("Average Waiting time : "+ srtf.getAverageWaitingTime () );
+            System.out.println ("Average Turnaround time : "+srtf.getAverageTurnaroundTime () );
+            for(int i =0; i<mainMethod.processArrayList.size(); i++){
+                Process p = mainMethod.processArrayList.get(i);
+                System.out.println(p.getName() +": Waiting Time= " + p.waitingTime+" || Turnaround Time= " + p.getTurnaroundTime());
+            }
             mainMethod.AWT.setText(srtf.getAverageWaitingTime() + "");
             mainMethod.ATAT.setText(srtf.getAverageTurnaroundTime () + "");
             mainMethod.ScheduleName.setText("SRTFSchedule");
