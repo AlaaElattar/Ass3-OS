@@ -148,7 +148,7 @@ public class Process implements Comparable<Process>
         for (int i =1; i<start.size(); i++){
             waitingTime+=start.get(i) - end.get(i-1);
         }
-        turnaroundTime = end.get(end.size()-1) - arrivalTime;
+        if(end.size()!=0)  turnaroundTime = end.get(end.size()-1) - arrivalTime;
     }
 
 
