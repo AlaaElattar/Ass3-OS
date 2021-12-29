@@ -39,14 +39,14 @@ public class SRTF {
             if (currTime == 0) {
                 currProcess.Execute();
                 currProcess.start.add(currTime);
-                aging(currTime);
+                aging(currProcess,currTime);
             }
             if (!(currProcess.equals(prevProcess)) && currTime != 0) {
                 currProcess.Execute();
                 if (prevProcess.getBurstTime() != 0) prevProcess.end.add(currTime);
                 currTime += contextSwitch;
                 currProcess.start.add(currTime);
-                aging(currTime);
+                aging(currProcess,currTime);
             }
             int updatedBt = currProcess.getBurstTime() - 1;
             currProcess.setBurstTime(updatedBt);
@@ -57,7 +57,7 @@ public class SRTF {
             }
 
             shortest = currProcess.processingTime;
-            if (shortest == 0) shortest = Integer.MAX_VALUE;
+            if (shortest <= 0) shortest = Integer.MAX_VALUE;
 
             if (currProcess.getBurstTime() == 0) {
                 complete++;
@@ -72,9 +72,9 @@ public class SRTF {
         }
     }
 
-    public void aging(int currTime) {
+    public void aging(Process currProcess,int currTime) {
         for (int i = 0; i < processes.size(); i++) {
-            if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).processingTime != 0)
+            if (processes.get(i).getArrivalTime() <= currTime && processes.get(i).processingTime != 0&& !(processes.get(i).equals(currProcess)))
                 processes.get(i).processingTime -= 1;
         }
     }
@@ -96,3 +96,7 @@ public class SRTF {
         return sumOfTurnAround / processes.size();
     }
 }
+
+
+
+
