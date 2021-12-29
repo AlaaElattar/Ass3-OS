@@ -229,9 +229,7 @@ public class Main extends javax.swing.JFrame {
         int rrQuantum;
         int contextProcess;
         int choiceNum;
-
-
-
+        
         System.out.println("Enter number of process");
         numOfProcess = input.nextInt();
 
@@ -257,9 +255,6 @@ public class Main extends javax.swing.JFrame {
             mainMethod.processArrayList.add(p);
         }
 
-
-
-
         choiceNum = menu();
 
         if (choiceNum == 1){
@@ -278,8 +273,11 @@ public class Main extends javax.swing.JFrame {
         }
 
         if (choiceNum == 2){
-
-
+            SRTF srtf = new SRTF(mainMethod.processArrayList,contextProcess);
+            srtf.start();
+            mainMethod.AWT.setText(srtf.getAverageWaitingTime() + "");
+            mainMethod.ATAT.setText(srtf.getAverageTurnaroundTime () + "");
+            mainMethod.ScheduleName.setText("SRTFSchedule");
         }
 
         if (choiceNum == 3){
@@ -318,9 +316,6 @@ public class Main extends javax.swing.JFrame {
                     mainMethod.processArrayList.indexOf(process), process.getColor(), process.getName(), process.getpID(), process.getPriority()
             });
         }
-
-
-
 
         mainMethod.tableModel.fireTableDataChanged();
         mainMethod.setLocationRelativeTo(null);
