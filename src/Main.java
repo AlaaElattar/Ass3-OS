@@ -303,7 +303,7 @@ public class Main extends javax.swing.JFrame {
 
             }
             mainMethod.ScheduleName.setText("AGATSchedule");
-            mainMethod.AWT.setText(a.getAverageTurnaroundTime () + "");
+            mainMethod.AWT.setText(a.getAverageWaitingTime () + "");
             mainMethod.ATAT.setText( a.getAverageTurnaroundTime () + "");
         }
 
