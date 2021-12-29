@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
+/**
+ * @author Rana Ihab Ahmed      20190207
+ * @author Omar Khaled Al Haj   20190351
+ */
 public class AGAT {
     ArrayList<Process> readyQueue;
     ArrayList<Process> allProcesses;

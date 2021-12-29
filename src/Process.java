@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * @author Rana Ihab Ahmed      20190207
+ * @author Omar Khaled Al Haj   20190351
+ */
+
 public class Process implements Comparable<Process>
 {
     private String name;
