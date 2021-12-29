@@ -1,9 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * @author Alaa Mahmoud Ebrahim 20190105
- */
-
 public class SJF {
 
     private ArrayList < Process > processes;    //all processes

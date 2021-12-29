@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * @author Alaa Mahmoud Ebrahim 20190105
- */
 public class PriorityScheduling {
     ArrayList<Process> Processes = new ArrayList<Process>();
     ArrayList<Process> WaitingQueue = new ArrayList<Process>();
